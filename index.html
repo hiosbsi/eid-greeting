@@ -9,68 +9,69 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column; /* لترتيب العناصر عمودياً */
             justify-content: center;
             align-items: center;
             margin: 0;
             color: white;
             text-align: center;
-            overflow: hidden;
-            position: relative;
+            overflow-x: hidden;
         }
         .card {
             background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            padding: 30px;
             border-radius: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.2);
-            max-width: 450px;
-            width: 90%;
+            max-width: 400px;
+            width: 85%;
             z-index: 10;
+            margin-bottom: 20px; /* مسافة عن التوقيع */
         }
         input {
             padding: 12px;
             border-radius: 12px;
             border: 2px solid #fdbb2d;
-            width: 80%;
+            width: 85%;
             margin-bottom: 20px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             background: rgba(255,255,255,0.9);
             color: #333;
         }
         button {
-            padding: 12px 30px;
+            padding: 12px 25px;
             border-radius: 12px;
             border: none;
             background: #fdbb2d;
             color: #1a2a6c;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
         }
-        button:hover { transform: scale(1.1); background: #fff; }
+        button:hover { transform: scale(1.05); background: #fff; }
         .hidden { display: none; }
-        h1 { font-size: 3rem; margin-bottom: 10px; color: #fdbb2d; }
-        #guestName { font-size: 2.2rem; color: #fff; margin-top: 5px; margin-bottom: 10px; }
-        
-        /* تصميم التوقيع الخاص بك */
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #fdbb2d; }
+        #guestName { font-size: 2rem; color: #fff; margin-top: 5px; margin-bottom: 10px; }
+        p { font-size: 1.1rem; line-height: 1.6; }
+
+        /* التوقيع المعدل ليظهر في كل الشاشات */
         .signature {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 1px;
-            border-left: 2px solid #fdbb2d;
-            padding-left: 10px;
+            padding: 10px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+            display: block;
         }
         .signature span {
             color: #fdbb2d;
             font-weight: bold;
+            text-shadow: 0 0 8px rgba(253, 187, 45, 0.4);
         }
     </style>
 </head>
@@ -82,6 +83,7 @@
         <input type="text" id="nameInput" placeholder="مثلاً: علي حسين">
         <br>
         <button onclick="showGreeting()">إظهار المعايدة 🌙</button>
+        <div class="signature">تمت البرمجة بواسطة <span>سمسم</span></div>
     </div>
 
     <div class="card hidden" id="greetingCard">
@@ -89,10 +91,7 @@
         <div id="guestName"></div>
         <p>كل عام وأنت بألف خير وصحة وسلامة.<br>تقبل الله طاعاتكم وأسعد أيامكم.</p>
         <button onclick="location.reload()">إرسال لشخص آخر 🔄</button>
-    </div>
-
-    <div class="signature">
-        تمت البرمجة بواسطة <span>سمسم</span>
+        <div class="signature">تمت البرمجة بواسطة <span>سمسم</span></div>
     </div>
 
     <script>
@@ -108,9 +107,10 @@
             document.getElementById('greetingCard').classList.remove('hidden');
             document.getElementById('guestName').innerText = name;
 
+            // إطلاق الألعاب النارية
             var duration = 6 * 1000;
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 35, spread: 360, ticks: 70, zIndex: 1000 };
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
 
             function randomInRange(min, max) {
                 return Math.random() * (max - min) + min;
@@ -119,7 +119,7 @@
             var interval = setInterval(function() {
                 var timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
-                var particleCount = 60 * (timeLeft / duration);
+                var particleCount = 50 * (timeLeft / duration);
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
                 confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
             }, 250);
